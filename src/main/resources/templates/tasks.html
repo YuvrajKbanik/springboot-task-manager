@@ -1,98 +1,182 @@
-```html
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Task Manager</title>
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
 </head>
 
-<body class="container mt-4">
+<body >
+<nav class="navbar navbar-dark bg-dark shadow-sm">
 
-<h1 class="mb-3">Task Manager</h1>
+    <div class="container">
 
-<!-- Add / Edit Form -->
-<form th:action="${task.id} == null ? @{/tasks/add} : @{/tasks/update/{id}(id=${task.id})}"
-      th:object="${task}"
-      method="post"
-      class="mb-3">
+        <span class="navbar-brand fs-3 fw-bold">
+            <i class="bi bi-check2-square"></i>
+            Task Manager
+        </span>
 
-    <input type="hidden" th:field="*{id}" />
+    </div>
 
-    <div class="row mb-2">
+</nav>
+<div class="container py-5">
 
-        <div class="col">
-            <input type="text"
-                   class="form-control"
-                   placeholder="Title"
-                   th:field="*{title}"
-                   required>
-        </div>
+    <div class="text-center mb-5">
 
-        <div class="col">
-            <input type="text"
-                   class="form-control"
-                   placeholder="Description"
-                   th:field="*{description}">
-        </div>
+        <h1 class="display-5 fw-bold">
+            Task Dashboard
+        </h1>
 
-        <div class="col">
-            <select class="form-select" th:field="*{status}">
-                <option value="PENDING">PENDING</option>
-                <option value="DONE">DONE</option>
-            </select>
-        </div>
+        <p class="text-muted">
+            Stay organized and never miss a deadline.
+        </p>
 
-        <div class="col">
-            <input type="date"
-                   class="form-control"
-                   th:field="*{dueDate}">
-        </div>
+    </div>
 
-        <div class="col">
-            <button type="submit" class="btn btn-primary">
-                <span th:text="${task.id} == null ? 'Add' : 'Update'"></span>
-            </button>
+    <div class="card shadow-lg border-0 mb-5">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+                <i class="bi bi-plus-circle"></i>
+                <span th:text="${task.id} == null ? 'Add New Task' : 'Update Task'"></span>
+            </h4>
+
+            <form
+                    th:action="${task.id} == null ? @{/tasks/add} : @{/tasks/update/{id}(id=${task.id})}"
+                    th:object="${task}"
+                    method="post">
+
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="row g-3">
+
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Title</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Enter task title"
+                                th:field="*{title}"
+                                required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Description</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Enter description"
+                                th:field="*{description}">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label fw-semibold">Status</label>
+                        <select class="form-select" th:field="*{status}">
+                            <option value="PENDING">Pending</option>
+                            <option value="DONE">Done</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label fw-semibold">Due Date</label>
+                        <input
+                                type="date"
+                                class="form-control"
+                                th:field="*{dueDate}">
+                    </div>
+
+                    <div class="col-md-2 d-grid">
+                        <label class="form-label">&nbsp;</label>
+
+                        <button
+                                type="submit"
+                                class="btn btn-success w-100">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            <span th:text="${task.id} == null ? 'Add Task' : 'Update Task'"></span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
         </div>
 
     </div>
-</form>
 
 
-<!-- Task Table -->
-<table class="table table-striped">
+    <div class="card shadow border-0">
 
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>Due Date</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
+        <div class="card-body">
 
-    <tbody>
+            <h4 class="mb-4">
+                <i class="bi bi-list-task"></i>
+                All Tasks
+            </h4>
 
-    <tr th:each="t : ${tasks}">
-        <td th:text="${t.title}"></td>
-        <td th:text="${t.description}"></td>
-        <td th:text="${t.status}"></td>
-        <td th:text="${t.dueDate}"></td>
+            <table class="table table-hover table-bordered align-middle text-center">
 
-        <td>
-            <a th:href="@{/tasks/edit/{id}(id=${t.id})}"
-               class="btn btn-warning btn-sm">Edit</a>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
 
-            <a th:href="@{/tasks/delete/{id}(id=${t.id})}"
-               class="btn btn-danger btn-sm">Delete</a>
-        </td>
-    </tr>
+            <tbody>
 
-    </tbody>
+            <tr th:each="t : ${tasks}">
+                <td th:text="${t.title}"></td>
+                <td th:text="${t.description}"></td>
+                <td>
+                <span th:if="${t.status == 'DONE'}"
+                class="badge bg-success">Done
+                </span>
+                    <span th:if="${t.status == 'PENDING'}"
+                          class="badge bg-warning text-dark">
+                        Pending
+                    </span>
+                </td>
+                <td th:text="${t.dueDate}"></td>
 
-</table>
+                <td>
+                    <a th:href="@{/tasks/edit/{id}(id=${t.id})}"
+                       class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
 
+                    <a th:href="@{/tasks/delete/{id}(id=${t.id})}"
+                       class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i>Delete</a>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+        </div>
+    </div>
+</div>
+<footer class="text-center mt-5 mb-3 text-muted">
+
+    Developed by <strong>Yuvraj Kansa Banik</strong> |
+    <a href="https://github.com/YuvrajKbanik"
+       target="_blank"
+       class="text-decoration-none">
+        GitHub
+    </a>
+
+</footer>
 </body>
 </html>
-```
+

@@ -1,0 +1,34 @@
+body{
+    background:#f5f7fb;
+    font-family:Arial,sans-serif;
+}
+
+.card{
+    border-radius:18px;
+}
+
+.form-control,
+.form-select{
+    border-radius:12px;
+}
+
+.btn{
+    border-radius:10px;
+}
+
+.table{
+    vertical-align:middle;
+}
+
+.table tbody tr:hover{
+    background:#f1f5ff;
+    transition:.3s;
+}
+
+.navbar{
+    padding:18px;
+}
+
+.display-5{
+    color:#1f2937;
+}
