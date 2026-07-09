@@ -22,6 +22,21 @@ public class TaskController {
         model.addAttribute("task", new Task());
         return "tasks";   // Looks for src/main/resources/templates/tasks.html
     }
+    @GetMapping("/search")
+    public String searchTasks(@RequestParam String keyword,
+                              Model model) {
+
+        model.addAttribute(
+                "tasks",
+                repo.findByTitleContainingIgnoreCase(keyword)
+        );
+
+        model.addAttribute("task", new Task());
+
+        model.addAttribute("keyword", keyword);
+
+        return "tasks";
+    }
 
     @PostMapping("/add")
     public String addTask(Task task) {

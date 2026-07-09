@@ -113,7 +113,53 @@
         </div>
 
     </div>
+    <div class="card shadow-sm border-0 mb-4">
 
+        <div class="card-body">
+
+            <form
+                    th:action="@{/tasks/search}"
+                    method="get">
+
+                <div class="row">
+
+                    <div class="col-md-10">
+
+                        <input
+                                type="text"
+                                name="keyword"
+                                class="form-control"
+                                placeholder="Search by title..."
+                                th:value="${keyword}">
+
+                    </div>
+
+                    <div class="col-md-2 d-grid">
+
+                        <button
+                                class="btn btn-primary">
+
+                            <i class="bi bi-search"></i>
+
+                            Search
+
+                        </button>
+                        <a href="/tasks"
+                           class="btn btn-secondary mt-2">
+
+                            Reset
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
     <div class="card shadow border-0">
 
