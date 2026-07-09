@@ -1,7 +1,7 @@
 package com.codewithraj.store.controller;
 
 import com.codewithraj.store.entity.Task;
-import com.codewithraj.store.repository.TaskRepository;
+import com.codewithraj.store.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tasks")
 public class TaskController {
 
-    private final TaskRepository repo;
+    private final TaskService service;
 
-    public TaskController(TaskRepository repo) {
-        this.repo = repo;
+    public TaskController(TaskService service) {
+        this.service = service;
     }
 
     @GetMapping
     public String listTasks(Model model) {
-        model.addAttribute("tasks", repo.findAll());
+        model.addAttribute("tasks", service.getAllTasks());
         model.addAttribute("task", new Task());
         return "tasks";   // Looks for src/main/resources/templates/tasks.html
     }
@@ -28,7 +28,7 @@ public class TaskController {
 
         model.addAttribute(
                 "tasks",
-                repo.findByTitleContainingIgnoreCase(keyword)
+                service.searchTasks(keyword)
         );
 
         model.addAttribute("task", new Task());
@@ -40,27 +40,27 @@ public class TaskController {
 
     @PostMapping("/add")
     public String addTask(Task task) {
-        repo.save(task);
+        service.saveTask(task);
         return "redirect:/tasks";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
-        repo.deleteById(id);
+        service.deleteTask(id);
         return "redirect:/tasks";
     }
 
     @GetMapping("/edit/{id}")
     public String editTask(@PathVariable Long id, Model model) {
-        model.addAttribute("task", repo.findById(id).orElseThrow());
-        model.addAttribute("tasks", repo.findAll());
+        model.addAttribute("task", service.getTask(id));
+        model.addAttribute("tasks", service.getAllTasks());
         return "tasks";
     }
 
     @PostMapping("/update/{id}")
     public String updateTask(@PathVariable Long id, Task task) {
         task.setId(id);
-        repo.save(task);
+        service.saveTask(task);;
         return "redirect:/tasks";
     }
     @GetMapping("/")
