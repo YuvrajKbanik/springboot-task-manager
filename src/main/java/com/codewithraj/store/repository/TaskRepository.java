@@ -7,5 +7,5 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findByTitleContainingIgnoreCase(String keyword);
-
+    long countByStatus(String status);
 }

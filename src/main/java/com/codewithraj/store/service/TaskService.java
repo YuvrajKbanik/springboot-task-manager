@@ -34,4 +34,15 @@ public class TaskService {
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
-}
+        public long getTotalTasks() {
+            return taskRepository.count();
+        }
+
+        public long getPendingTasks() {
+            return taskRepository.countByStatus("PENDING");
+        }
+
+        public long getCompletedTasks() {
+            return taskRepository.countByStatus("DONE");
+        }
+    }

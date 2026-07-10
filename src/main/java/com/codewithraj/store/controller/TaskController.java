@@ -20,7 +20,13 @@ public class TaskController {
     public String listTasks(Model model) {
         model.addAttribute("tasks", service.getAllTasks());
         model.addAttribute("task", new Task());
-        return "tasks";   // Looks for src/main/resources/templates/tasks.html
+        model.addAttribute("totalTasks", service.getTotalTasks());
+
+        model.addAttribute("pendingTasks", service.getPendingTasks());
+
+        model.addAttribute("completedTasks", service.getCompletedTasks());
+        return "tasks";
+
     }
     @GetMapping("/search")
     public String searchTasks(@RequestParam String keyword,
@@ -30,6 +36,11 @@ public class TaskController {
                 "tasks",
                 service.searchTasks(keyword)
         );
+        model.addAttribute("totalTasks", service.getTotalTasks());
+
+        model.addAttribute("pendingTasks", service.getPendingTasks());
+
+        model.addAttribute("completedTasks", service.getCompletedTasks());
 
         model.addAttribute("task", new Task());
 

@@ -1,50 +1,125 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Task Manager</title>
+
     <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <link rel="stylesheet"
           th:href="@{/css/style.css}">
 </head>
 
-<body >
-<nav class="navbar navbar-dark bg-dark shadow-sm">
+<body>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-
         <span class="navbar-brand fs-3 fw-bold">
             <i class="bi bi-check2-square"></i>
             Task Manager
         </span>
-
     </div>
-
 </nav>
+
 <div class="container py-5">
 
     <div class="text-center mb-5">
-
-        <h1 class="display-5 fw-bold">
-            Task Dashboard
-        </h1>
-
+        <h1 class="display-5 fw-bold">Task Dashboard</h1>
         <p class="text-muted">
-            Stay organized and never miss a deadline.
+            Stay organized and manage your daily tasks efficiently.
         </p>
+    </div>
+    <div class="row mb-5">
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 text-center">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+
+                        Total Tasks
+
+                    </h6>
+
+                    <h2
+                            class="fw-bold text-primary"
+                            th:text="${totalTasks}">
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 text-center">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+
+                        Pending Tasks
+
+                    </h6>
+
+                    <h2
+                            class="fw-bold text-warning"
+                            th:text="${pendingTasks}">
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 text-center">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+
+                        Completed Tasks
+
+                    </h6>
+
+                    <h2
+                            class="fw-bold text-success"
+                            th:text="${completedTasks}">
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
+    <!-- Add Task -->
 
     <div class="card shadow-lg border-0 mb-5">
 
         <div class="card-body">
 
             <h4 class="mb-4">
+
                 <i class="bi bi-plus-circle"></i>
+
                 <span th:text="${task.id} == null ? 'Add New Task' : 'Update Task'"></span>
+
             </h4>
 
             <form
@@ -52,55 +127,81 @@
                     th:object="${task}"
                     method="post">
 
-                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{id}">
 
                 <div class="row g-3">
 
-                    <div class="col-md-3">
+                    <div class="col-lg-2">
                         <label class="form-label fw-semibold">Title</label>
+
                         <input
                                 type="text"
                                 class="form-control"
-                                placeholder="Enter task title"
+                                placeholder="Task title"
                                 th:field="*{title}"
                                 required>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-lg-3">
+
                         <label class="form-label fw-semibold">Description</label>
+
                         <input
                                 type="text"
                                 class="form-control"
-                                placeholder="Enter description"
+                                placeholder="Description"
                                 th:field="*{description}">
+
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-lg-2">
+
                         <label class="form-label fw-semibold">Status</label>
-                        <select class="form-select" th:field="*{status}">
+
+                        <select class="form-select"
+                                th:field="*{status}">
+
                             <option value="PENDING">Pending</option>
                             <option value="DONE">Done</option>
+
                         </select>
+
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold">Priority</label>
+
+                        <select class="form-select"
+                                th:field="*{priority}">
+
+                            <option value="HIGH">High</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="LOW">Low</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-2">
+
                         <label class="form-label fw-semibold">Due Date</label>
+
                         <input
                                 type="date"
                                 class="form-control"
                                 th:field="*{dueDate}">
+
                     </div>
 
-                    <div class="col-md-2 d-grid">
+                    <div class="col-lg-1 d-grid">
+
                         <label class="form-label">&nbsp;</label>
 
                         <button
-                                type="submit"
-                                class="btn btn-success w-100">
+                                class="btn btn-success">
 
                             <i class="bi bi-check-circle"></i>
-
-                            <span th:text="${task.id} == null ? 'Add Task' : 'Update Task'"></span>
 
                         </button>
 
@@ -113,6 +214,9 @@
         </div>
 
     </div>
+
+    <!-- Search -->
+
     <div class="card shadow-sm border-0 mb-4">
 
         <div class="card-body">
@@ -121,35 +225,39 @@
                     th:action="@{/tasks/search}"
                     method="get">
 
-                <div class="row">
+                <div class="row g-2">
 
                     <div class="col-md-10">
 
                         <input
                                 type="text"
-                                name="keyword"
                                 class="form-control"
-                                placeholder="Search by title..."
+                                name="keyword"
+                                placeholder="Search tasks..."
                                 th:value="${keyword}">
 
                     </div>
 
-                    <div class="col-md-2 d-grid">
+                    <div class="col-md-2">
 
-                        <button
-                                class="btn btn-primary">
+                        <div class="d-flex gap-2">
 
-                            <i class="bi bi-search"></i>
+                            <button
+                                    class="btn btn-primary flex-fill">
 
-                            Search
+                                <i class="bi bi-search"></i>
 
-                        </button>
-                        <a href="/tasks"
-                           class="btn btn-secondary mt-2">
+                            </button>
 
-                            Reset
+                            <a
+                                    href="/tasks"
+                                    class="btn btn-secondary flex-fill">
 
-                        </a>
+                                Reset
+
+                            </a>
+
+                        </div>
 
                     </div>
 
@@ -161,68 +269,149 @@
 
     </div>
 
+    <!-- Table -->
+
     <div class="card shadow border-0">
 
         <div class="card-body">
 
             <h4 class="mb-4">
+
                 <i class="bi bi-list-task"></i>
+
                 All Tasks
+
             </h4>
 
             <table class="table table-hover table-bordered align-middle text-center">
 
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Due Date</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
+                <thead class="table-dark">
 
-            <tbody>
+                <tr>
 
-            <tr th:each="t : ${tasks}">
-                <td th:text="${t.title}"></td>
-                <td th:text="${t.description}"></td>
-                <td>
-                <span th:if="${t.status == 'DONE'}"
-                class="badge bg-success">Done
-                </span>
-                    <span th:if="${t.status == 'PENDING'}"
-                          class="badge bg-warning text-dark">
-                        Pending
-                    </span>
-                </td>
-                <td th:text="${t.dueDate}"></td>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Due Date</th>
+                    <th>Actions</th>
 
-                <td>
-                    <a th:href="@{/tasks/edit/{id}(id=${t.id})}"
-                       class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                </tr>
 
-                    <a th:href="@{/tasks/delete/{id}(id=${t.id})}"
-                       class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i>Delete</a>
-                </td>
-            </tr>
+                </thead>
 
-            </tbody>
+                <tbody>
 
-        </table>
+                <tr th:each="t : ${tasks}">
+
+                    <td th:text="${t.title}"></td>
+
+                    <td th:text="${t.description}"></td>
+
+                    <td>
+
+                        <span
+                                th:if="${t.status=='DONE'}"
+                                class="badge bg-success">
+
+                            Done
+
+                        </span>
+
+                        <span
+                                th:if="${t.status=='PENDING'}"
+                                class="badge bg-warning text-dark">
+
+                            Pending
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <span
+                                th:if="${t.priority=='HIGH'}"
+                                class="badge bg-danger">
+
+                            High
+
+                        </span>
+
+                        <span
+                                th:if="${t.priority=='MEDIUM'}"
+                                class="badge bg-warning text-dark">
+
+                            Medium
+
+                        </span>
+
+                        <span
+                                th:if="${t.priority=='LOW'}"
+                                class="badge bg-success">
+
+                            Low
+
+                        </span>
+
+                    </td>
+
+                    <td th:text="${t.dueDate}"></td>
+
+                    <td>
+
+                        <div class="d-flex justify-content-center gap-2">
+
+                            <a
+                                    th:href="@{/tasks/edit/{id}(id=${t.id})}"
+                                    class="btn btn-outline-primary btn-sm">
+
+                                <i class="bi bi-pencil-square"></i>
+
+                            </a>
+
+                            <a
+                                    th:href="@{/tasks/delete/{id}(id=${t.id})}"
+                                    class="btn btn-outline-danger btn-sm"
+                                    onclick="return confirm('Delete this task?')">
+
+                                <i class="bi bi-trash"></i>
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
         </div>
-    </div>
-</div>
-<footer class="text-center mt-5 mb-3 text-muted">
 
-    Developed by <strong>Yuvraj Kansa Banik</strong> |
-    <a href="https://github.com/YuvrajKbanik"
-       target="_blank"
-       class="text-decoration-none">
+    </div>
+
+</div>
+
+<footer class="text-center mt-5 mb-4 text-muted">
+
+    Developed by
+    <strong>Yuvraj Kansa Banik</strong>
+
+    |
+
+    <a
+            href="https://github.com/YuvrajKbanik"
+            target="_blank"
+            class="text-decoration-none">
+
         GitHub
+
     </a>
 
 </footer>
+
 </body>
 </html>
-

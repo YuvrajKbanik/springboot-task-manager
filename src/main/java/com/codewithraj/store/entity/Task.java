@@ -10,7 +10,7 @@ public class Task {
     private String description;
     private String status;
     private String dueDate;
-
+    private String priority;
     public Task() {}
 
     public Long getId() { return id; }
@@ -27,4 +27,12 @@ public class Task {
 
     public String getDueDate() { return dueDate; }
     public void setDueDate(String dueDate) { this.dueDate = dueDate; }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 }

@@ -2,6 +2,14 @@ body{
     background:#f5f7fb;
     font-family:Arial,sans-serif;
 }
+.card h2{
+    font-size:40px;
+}
+
+.card h6{
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
 
 .card{
     border-radius:18px;
