@@ -22,7 +22,7 @@ A task management web application built using Spring Boot, Spring Data JPA, Thym
 
 ## Screenshot
 
-![Task Dashboard](screenshots/dashboard-v1.1.png)
+![Task Dashboard](screenshots/dashboard-v1.5.png)
 
 ## Run Locally
 
