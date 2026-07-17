@@ -4,6 +4,9 @@ import com.codewithraj.store.entity.Task;
 import com.codewithraj.store.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -48,6 +51,13 @@ public class TaskService {
     public List<Task> getSortedTasks(String sortBy) {
 
         return taskRepository.findAll(Sort.by(sortBy));
+
+    }
+    public Page<Task> getTasksByPage(int page) {
+
+        Pageable pageable = PageRequest.of(page, 4);
+
+        return taskRepository.findAll(pageable);
 
     }
     }

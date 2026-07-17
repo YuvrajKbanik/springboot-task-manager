@@ -2,6 +2,7 @@ package com.codewithraj.store.controller;
 
 import com.codewithraj.store.entity.Task;
 import com.codewithraj.store.service.TaskService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +18,22 @@ public class TaskController {
     }
 
     @GetMapping
-    public String listTasks(Model model) {
-        model.addAttribute("tasks", service.getAllTasks());
-        model.addAttribute("task", new Task());
-        model.addAttribute("totalTasks", service.getTotalTasks());
+    public String listTasks(
+            @RequestParam(defaultValue = "0") int page,
+            Model model) {
 
-        model.addAttribute("pendingTasks", service.getPendingTasks());
+        Page<Task> taskPage = service.getTasksByPage(page);
 
-        model.addAttribute("completedTasks", service.getCompletedTasks());
+        model.addAttribute("tasks", taskPage.getContent());
+
+        model.addAttribute("currentPage", page);
+
+        model.addAttribute("totalPages", taskPage.getTotalPages());
+
+        addCommonAttributes(model);
+
+
         return "tasks";
-
     }
     @GetMapping("/search")
     public String searchTasks(@RequestParam String keyword,
@@ -36,15 +43,12 @@ public class TaskController {
                 "tasks",
                 service.searchTasks(keyword)
         );
-        model.addAttribute("totalTasks", service.getTotalTasks());
+        addCommonAttributes(model);
 
-        model.addAttribute("pendingTasks", service.getPendingTasks());
-
-        model.addAttribute("completedTasks", service.getCompletedTasks());
-
-        model.addAttribute("task", new Task());
-
+        model.addAttribute("currentPage", 0);
+        model.addAttribute("totalPages", 1);
         model.addAttribute("keyword", keyword);
+
 
         return "tasks";
     }
@@ -62,9 +66,26 @@ public class TaskController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editTask(@PathVariable Long id, Model model) {
+    public String editTask(@PathVariable Long id,
+                           @RequestParam(defaultValue = "0") int page,
+                           Model model) {
+
+        Page<Task> taskPage = service.getTasksByPage(page);
+
+        model.addAttribute("tasks", taskPage.getContent());
+
         model.addAttribute("task", service.getTask(id));
-        model.addAttribute("tasks", service.getAllTasks());
+
+        model.addAttribute("currentPage", page);
+
+        model.addAttribute("totalPages", taskPage.getTotalPages());
+
+        model.addAttribute("totalTasks", service.getTotalTasks());
+
+        model.addAttribute("pendingTasks", service.getPendingTasks());
+
+        model.addAttribute("completedTasks", service.getCompletedTasks());
+
         return "tasks";
     }
 
@@ -87,14 +108,26 @@ public class TaskController {
                 service.getSortedTasks(sortBy)
         );
 
-        model.addAttribute("task", new Task());
+
 
         model.addAttribute("keyword", "");
+        addCommonAttributes(model);
 
-        model.addAttribute("totalTasks", service.getTotalTasks());
-        model.addAttribute("pendingTasks", service.getPendingTasks());
-        model.addAttribute("completedTasks", service.getCompletedTasks());
+        model.addAttribute("currentPage", 0);
+        model.addAttribute("totalPages", 1);
 
         return "tasks";
     }
+    private void addCommonAttributes(Model model) {
+
+        model.addAttribute("task", new Task());
+
+        model.addAttribute("totalTasks", service.getTotalTasks());
+
+        model.addAttribute("pendingTasks", service.getPendingTasks());
+
+        model.addAttribute("completedTasks", service.getCompletedTasks());
+
+    }
+
 }
