@@ -78,4 +78,23 @@ public class TaskController {
     public String home() {
         return "redirect:/tasks";
     }
+    @GetMapping("/sort")
+    public String sortTasks(@RequestParam String sortBy,
+                            Model model) {
+
+        model.addAttribute(
+                "tasks",
+                service.getSortedTasks(sortBy)
+        );
+
+        model.addAttribute("task", new Task());
+
+        model.addAttribute("keyword", "");
+
+        model.addAttribute("totalTasks", service.getTotalTasks());
+        model.addAttribute("pendingTasks", service.getPendingTasks());
+        model.addAttribute("completedTasks", service.getCompletedTasks());
+
+        return "tasks";
+    }
 }

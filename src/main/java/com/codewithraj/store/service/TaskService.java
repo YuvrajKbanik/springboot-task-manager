@@ -3,6 +3,7 @@ package com.codewithraj.store.service;
 import com.codewithraj.store.entity.Task;
 import com.codewithraj.store.repository.TaskRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -34,15 +35,19 @@ public class TaskService {
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
-        public long getTotalTasks() {
+    public long getTotalTasks() {
             return taskRepository.count();
         }
-
-        public long getPendingTasks() {
+     public long getPendingTasks() {
             return taskRepository.countByStatus("PENDING");
         }
 
-        public long getCompletedTasks() {
+     public long getCompletedTasks() {
             return taskRepository.countByStatus("DONE");
         }
+    public List<Task> getSortedTasks(String sortBy) {
+
+        return taskRepository.findAll(Sort.by(sortBy));
+
+    }
     }

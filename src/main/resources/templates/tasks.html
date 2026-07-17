@@ -268,7 +268,52 @@
         </div>
 
     </div>
+    <!-- sorting -->
+    <div class="card shadow-sm border-0 mb-4">
 
+        <div class="card-body">
+
+            <form
+                    th:action="@{/tasks/sort}"
+                    method="get">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-10">
+
+                        <select
+                                name="sortBy"
+                                class="form-select">
+
+                            <option value="title">Title</option>
+                            <option value="status">Status</option>
+                            <option value="priority">Priority</option>
+                            <option value="dueDate">Due Date</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <button
+                                class="btn btn-dark w-100">
+
+                            <i class="bi bi-sort-alpha-down"></i>
+
+                            Sort
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
     <!-- Table -->
 
     <div class="card shadow border-0">
