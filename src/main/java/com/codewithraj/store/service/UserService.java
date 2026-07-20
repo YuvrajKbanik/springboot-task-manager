@@ -33,5 +33,12 @@ public class UserService {
         return userRepository.findByUsername(username).isPresent();
 
     }
+    public User findByUsername(String username){
+
+        return userRepository
+                .findByUsername(username)
+                .orElseThrow();
+
+    }
 
 }

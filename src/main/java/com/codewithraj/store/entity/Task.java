@@ -1,5 +1,7 @@
 package com.codewithraj.store.entity;
 import jakarta.persistence.*;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 @Entity
 public class Task {
     @Id
@@ -34,5 +36,15 @@ public class Task {
 
     public void setPriority(String priority) {
         this.priority = priority;
+    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
