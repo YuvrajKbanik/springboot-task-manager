@@ -1,5 +1,6 @@
 package com.codewithraj.store.service;
 
+import com.codewithraj.store.entity.Category;
 import com.codewithraj.store.entity.Task;
 import com.codewithraj.store.entity.User;
 import com.codewithraj.store.repository.TaskRepository;
@@ -99,7 +100,7 @@ public class TaskService {
         return taskRepository.findByUser(currentUser(),pageable);
 
     }
-    private User currentUser(){
+    private User currentUser() {
 
         Authentication authentication =
                 SecurityContextHolder
@@ -109,6 +110,10 @@ public class TaskService {
         return userService.findByUsername(
                 authentication.getName()
         );
+    }
+    public List<Task> getTasksByCategory(Category category) {
+        return taskRepository.findByUserAndCategory(currentUser(), category);
+    }
 
-    }
-    }
+
+}

@@ -1,5 +1,6 @@
 package com.codewithraj.store.repository;
 
+import com.codewithraj.store.entity.Category;
 import com.codewithraj.store.entity.Task;
 import com.codewithraj.store.entity.User;
 import org.springframework.data.domain.*;
@@ -18,4 +19,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     long countByUserAndStatus(User user,String status);
     List<Task> findByTitleContainingIgnoreCase(String keyword);
     long countByStatus(String status);
+    List<Task> findByUserAndCategory(User user, Category category);
 }

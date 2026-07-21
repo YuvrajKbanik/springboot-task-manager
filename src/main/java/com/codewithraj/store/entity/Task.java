@@ -47,4 +47,14 @@ public class Task {
     public void setUser(User user) {
         this.user = user;
     }
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

@@ -194,6 +194,24 @@
                         </select>
 
                     </div>
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold">Category</label>
+
+                        <select class="form-select"
+                                th:field="*{category}">
+
+                            <option value="">Select Category</option>
+
+                            <option
+                                    th:each="c : ${categories}"
+                                    th:value="${c.id}"
+                                    th:text="${c.name}">
+                            </option>
+
+                        </select>
+
+                    </div>
 
                     <div class="col-lg-2">
 
@@ -280,6 +298,25 @@
         </div>
 
     </div>
+    <div class="mb-4">
+
+        <a th:href="@{/tasks}"
+           class="btn btn-secondary me-2">
+
+            All
+
+        </a>
+
+        <a
+                th:each="c : ${categories}"
+                th:href="@{/tasks/category/{id}(id=${c.id})}"
+                class="btn btn-outline-primary me-2">
+
+            <span th:text="${c.name}"></span>
+
+        </a>
+
+    </div>
     <!-- sorting -->
     <div class="card shadow-sm border-0 mb-4">
 
@@ -350,6 +387,7 @@
                     <th>Description</th>
                     <th>Status</th>
                     <th>Priority</th>
+                    <th>Category</th>
                     <th>Due Date</th>
                     <th>Actions</th>
 
@@ -412,6 +450,16 @@
                         </span>
 
                     </td>
+                    <td>
+
+                    <span
+                            class="badge bg-info"
+                            th:text="${t.category != null ? t.category.name : 'None'}">
+
+                    </span>
+
+                    </td>
+
 
                     <td th:text="${t.dueDate}"></td>
 
@@ -420,7 +468,7 @@
                         <div class="d-flex justify-content-center gap-2">
 
                             <a
-                                    th:href="@{/tasks/edit/{id}(id=${t.id}, page=${currentPage})}"8
+                                    th:href="@{/tasks/edit/{id}(id=${t.id}, page=${currentPage})}"
                                     class="btn btn-outline-primary btn-sm">
 
                                 <i class="bi bi-pencil-square"></i>

@@ -1,6 +1,8 @@
 package com.codewithraj.store.controller;
 
+import com.codewithraj.store.entity.Category;
 import com.codewithraj.store.entity.Task;
+import com.codewithraj.store.service.CategoryService;
 import com.codewithraj.store.service.TaskService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -12,9 +14,14 @@ import org.springframework.web.bind.annotation.*;
 public class TaskController {
 
     private final TaskService service;
+    private final CategoryService categoryService;
 
-    public TaskController(TaskService service) {
-        this.service = service;
+    public TaskController(TaskService service,
+                          CategoryService categoryService){
+
+        this.service=service;
+        this.categoryService=categoryService;
+
     }
 
     @GetMapping
@@ -29,6 +36,10 @@ public class TaskController {
         model.addAttribute("currentPage", page);
 
         model.addAttribute("totalPages", taskPage.getTotalPages());
+        model.addAttribute(
+                "categories",
+                categoryService.getCategories()
+        );
 
         addCommonAttributes(model);
 
@@ -48,6 +59,10 @@ public class TaskController {
         model.addAttribute("currentPage", 0);
         model.addAttribute("totalPages", 1);
         model.addAttribute("keyword", keyword);
+        model.addAttribute(
+                "categories",
+                categoryService.getCategories()
+        );
 
 
         return "tasks";
@@ -85,6 +100,10 @@ public class TaskController {
         model.addAttribute("pendingTasks", service.getPendingTasks());
 
         model.addAttribute("completedTasks", service.getCompletedTasks());
+        model.addAttribute(
+                "categories",
+                categoryService.getCategories()
+        );
 
         return "tasks";
     }
@@ -115,6 +134,10 @@ public class TaskController {
 
         model.addAttribute("currentPage", 0);
         model.addAttribute("totalPages", 1);
+        model.addAttribute(
+                "categories",
+                categoryService.getCategories()
+        );
 
         return "tasks";
     }
@@ -128,6 +151,24 @@ public class TaskController {
 
         model.addAttribute("completedTasks", service.getCompletedTasks());
 
+    }
+    @GetMapping("/category/{id}")
+    public String categoryTasks(@PathVariable Long id, Model model) {
+
+        Category category = categoryService.getCategory(id);
+
+        model.addAttribute("tasks",
+                service.getTasksByCategory(category));
+
+        addCommonAttributes(model);
+
+        model.addAttribute("categories",
+                categoryService.getCategories());
+
+        model.addAttribute("currentPage", 0);
+        model.addAttribute("totalPages", 1);
+
+        return "tasks";
     }
 
 }
