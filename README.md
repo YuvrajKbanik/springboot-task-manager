@@ -53,7 +53,7 @@ A full-stack Task Management web application built with **Spring Boot**, **Sprin
 
 ### Dashboard
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/Dashboard.png)
 
 ---
 
