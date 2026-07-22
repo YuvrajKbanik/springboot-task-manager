@@ -10,6 +10,12 @@ A full-stack Task Management web application built with **Spring Boot**, **Sprin
 
 ---
 
+## Demo Account
+
+Username: yuvraj
+Password: yuvraj
+---
+
 ## Features
 
 - Secure user authentication with Spring Security
