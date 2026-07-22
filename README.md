@@ -1,38 +1,129 @@
-# Spring Boot Task Manager
+# Task Manager
 
-A task management web application built using Spring Boot, Spring Data JPA, Thymeleaf, and MySQL. It allows users to create, update, delete, and manage tasks through a responsive web interface.
+A full-stack Task Management web application built with **Spring Boot**, **Spring Security**, **Thymeleaf**, and **PostgreSQL**. The application allows users to securely manage their daily tasks through authentication, CRUD operations, and cloud-based data persistence.
+
+---
+
+## Live Demo [Click on link]
+
+🔗 **Application:** https://task-manager-00hu.onrender.com
+
+---
 
 ## Features
 
+- Secure user authentication with Spring Security
 - Create, update, and delete tasks
-- View all tasks
-- Task status management
-- Due date support
-- Responsive Bootstrap UI
+- View all tasks in a responsive dashboard
+- Task priority and status management
+- Server-side form validation
+- PostgreSQL database integration
+- Dockerized deployment
+- Hosted on Render
 
-## Technologies
+---
 
-- Java
-- Spring Boot
-- Spring Data JPA
-- Thymeleaf
-- MySQL
-- Bootstrap 5
-- Maven
+## Tech Stack
 
-## Screenshot
+| Category | Technologies |
+|----------|--------------|
+| Language | Java 21 |
+| Backend | Spring Boot, Spring MVC |
+| Security | Spring Security |
+| Database | PostgreSQL (Neon) |
+| ORM | Spring Data JPA, Hibernate |
+| Frontend | Thymeleaf, HTML, CSS |
+| Build Tool | Maven |
+| Deployment | Docker, Render |
+| Version Control | Git & GitHub |
 
-![Task Dashboard](screenshots/dashboard-v1.5.png)
+---
 
-## Run Locally
+## Screenshots
 
-1. Clone the repository.
-2. Configure MySQL in `application.properties`.
-3. Run `StoreApplication.java`.
-4. Open `http://localhost:8080/tasks`.
+### Login
+
+![Login](screenshots/login.png)
+
+---
+### Register
+
+![Register](screenshots/register.png)
+
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+### Categories
+
+![Categories](screenshots/Categories.png)
+
+---
+
+## Project Structure
+
+```text
+src
+├── controller
+├── service
+├── repository
+├── entity
+├── config
+├── templates
+├── static
+└── resources
+```
+
+---
+
+## Getting Started Locally
+
+### Clone the repository
+
+```bash
+git clone https://github.com/YuvrajKbanik/springboot-task-manager.git
+```
+
+### Navigate to the project
+
+```bash
+cd springboot-task-manager
+```
+
+### Configure environment variables
+
+```
+SPRING_DATASOURCE_URL
+SPRING_DATASOURCE_USERNAME
+SPRING_DATASOURCE_PASSWORD
+```
+
+### Run the application
+
+```bash
+./mvnw spring-boot:run
+```
+
+The application will be available at:
+
+```
+http://localhost:8080
+```
+
+---
 
 ## Author
 
-Yuvraj Kansa Banik
+**Yuvraj Kansa Banik**
 
-GitHub: https://github.com/YuvrajKbanik
+- GitHub: https://github.com/YuvrajKbanik
+- LinkedIn: https://www.linkedin.com/in/yuvraj-kansa-banik-936b58326/
+
+---
+
+## License
+
+This project is licensed under the MIT License.
