@@ -2,16 +2,22 @@ package com.codewithraj.store.entity;
 import jakarta.persistence.*;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.validation.constraints.NotBlank;
+
 @Entity
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message="Title cannot be empty")
     private String title;
+    @NotBlank(message="Description cannot be empty")
     private String description;
+    @NotBlank(message="Select a status")
     private String status;
     private String dueDate;
+    @NotBlank(message="Select a priority")
     private String priority;
     public Task() {}
 

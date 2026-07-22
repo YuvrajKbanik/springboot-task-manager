@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 @RequestMapping("/tasks")
@@ -69,7 +71,21 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    public String addTask(Task task) {
+    public String addTask(
+            @Valid @ModelAttribute Task task,
+            BindingResult result,
+            Model model){
+        if(result.hasErrors()){
+
+            addCommonAttributes(model);
+
+            model.addAttribute(
+                    "categories",
+                    categoryService.getCategories()
+            );
+
+            return "tasks";
+        }
         service.saveTask(task);
         return "redirect:/tasks";
     }
@@ -109,8 +125,21 @@ public class TaskController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateTask(@PathVariable Long id, Task task) {
+    public String updateTask(@PathVariable Long id,@Valid @ModelAttribute Task task,
+                             BindingResult result,
+                             Model model) {
         task.setId(id);
+        if(result.hasErrors()){
+
+            addCommonAttributes(model);
+
+            model.addAttribute(
+                    "categories",
+                    categoryService.getCategories()
+            );
+
+            return "tasks";
+        }
         service.saveTask(task);;
         return "redirect:/tasks";
     }
